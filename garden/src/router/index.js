@@ -8,10 +8,10 @@ const router = createRouter({
       name: 'home',
       component: MyGarden,
     },
-    {
-      path: '/dirt',
-      name: 'dirt',
-      component: ,
+{
+      path: '/water',
+      name: 'water',
+      component: water,
 
     },
   ],
