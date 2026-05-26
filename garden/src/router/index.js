@@ -8,12 +8,6 @@ const router = createRouter({
       name: 'home',
       component: MyGarden,
     },
-{
-      path: '/water',
-      name: 'water',
-      component: water,
-
-    },
   ],
 })
 
@@ -22,27 +16,29 @@ export default router
 
 
 let balance = 0.00;
-let waterPercentage = 20;
+let waterAmount = 3 ;
 
 const waterBtn = document.getElementById('waterBtn');
 const walletDisplay = document.getElementById('wallet');
-const waterLevelDisplay = document.getElementById('waterLevel');
+const waterDisplay = document.getElementById('water');
 const flowerDisplay = document.getElementById('flower');
 
-// Payout per button press
+//pay amount per button press
 const payout = 0.10; 
 
 waterBtn.addEventListener('click', () => {
   balance += payout;
   walletDisplay.textContent = `Balance: $${balance.toFixed(2)}`;
 
-  //animating flower height
-  if (waterPercentage < 100) {
+  //watering
+
+  if (waterAmount < 100) {
     waterPercentage += 10;
-    waterLevelDisplay.style.height = `${waterPercentage}%`;
+    waterDisplay.style.height = `{waterAmount}`;
   }
 
-//watering
+  //animating flower height
+
   setTimeout(() => {
     flowerDisplay.style.transform = 'scale(1)';
   }, 300);
