@@ -1,12 +1,20 @@
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+  const waterCount = ref(3)
+  const waterPrice = ref(3)
+  const totalMoney = ref(0)
+
+  function buyWater() {
+    waterCount.value += 1
+    totalMoney.value += waterPrice.value
   }
 
-  return { count, doubleCount, increment }
+  return {
+    waterCount,
+    waterPrice,
+    totalMoney,
+    buyWater,
+  }
 })
