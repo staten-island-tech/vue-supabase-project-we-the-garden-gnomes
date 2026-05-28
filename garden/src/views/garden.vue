@@ -2,12 +2,14 @@
   <div class="page">
     <div class="container">
       <Water />
+      <Flowers />
     </div>
   </div>
 </template>
 
 <script setup>
 import Water from '../components/water.vue'
+import Flowers from '../components/flowers.vue'
 </script>
 
 <style scoped>
@@ -22,5 +24,7 @@ import Water from '../components/water.vue'
 .container {
   width: 100%;
   max-width: 1200px;
+  display: grid;
+  gap: 2rem;
 }
 </style>

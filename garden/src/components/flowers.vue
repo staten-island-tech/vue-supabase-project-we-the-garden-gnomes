@@ -1,0 +1,86 @@
+<template>
+  <section class="flowers-card">
+    <h1>Flower Shop</h1>
+
+    <div class="flower-grid">
+      <article v-for="flower in store.flowers" :key="flower.name" class="flower-card">
+        <div class="flower-image" v-if="flower.imageUrl">
+          <img :src="flower.imageUrl" :alt="flower.name" />
+        </div>
+
+        <div class="flower-info">
+          <h2>{{ flower.name }}</h2>
+          <div class="prices">
+            <span>Buy: ${{ flower.buyPrice }}</span>
+            <span>Sell: ${{ flower.sellPrice }}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { useFlowerStore } from '../stores/flowers'
+
+const store = useFlowerStore()
+</script>
+
+<style scoped>
+.flowers-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.flowers-card h1 {
+  margin-bottom: 1rem;
+  font-size: 1.9rem;
+}
+
+.flower-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.flower-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flower-image {
+  min-height: 140px;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flower-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.flower-info h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.prices {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  color: #334155;
+}
+</style>
