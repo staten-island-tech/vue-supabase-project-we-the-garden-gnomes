@@ -16,7 +16,23 @@ export const useFlowerStore = defineStore('flower', () => {
     { name: 'Goldfish Plants', buyPrice: 50, sellPrice: 75, imageUrl: '' },
   ])
 
+  const inventory = ref([])
+
+  function addToInventory(flower) {
+    const existing = inventory.value.find((item) => item.name === flower.name)
+    if (existing) {
+      existing.quantity += 1
+    } else {
+      inventory.value.push({
+        name: flower.name,
+        quantity: 1,
+      })
+    }
+  }
+
   return {
     flowers,
+    inventory,
+    addToInventory,
   }
 })
