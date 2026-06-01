@@ -1,10 +1,17 @@
 <template>
   <div class="page">
+    <div class="background-photos" aria-hidden="true">
+      <img src="/DirtBackground.png" alt="dirt background" class="bg dirt" />
+      <img src="/GardenFrame.png" alt="garden frame" class="bg frame" />
+      <img src="/ShopButton.png" alt="shop button" class="bg shop" />
+    </div>
+
     <div class="container">
       <Water />
       <Inventory />
       <Flowers />
     </div>
+
     <div class="dirt-bar" aria-hidden="true"></div>
   </div>
 </template>
@@ -17,6 +24,7 @@ import Flowers from '../components/flowers.vue'
 
 <style scoped>
 .page {
+  position: relative;
   min-height: 100vh;
   width: 100vw;
   display: flex;
@@ -24,6 +32,49 @@ import Flowers from '../components/flowers.vue'
   justify-content: center;
   padding: 2rem;
   padding-bottom: 8rem;
+}
+
+.background-photos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1600px;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.background-photos .bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.background-photos .dirt {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: auto;
+  transform: none;
+  width: 100%;
+  height: 30vh;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.background-photos .frame {
+  z-index: 2;
+}
+
+.background-photos .shop {
+  z-index: 3;
 }
 
 .container {
@@ -34,6 +85,8 @@ import Flowers from '../components/flowers.vue'
   gap: 2rem;
   align-items: flex-start;
   justify-content: space-between;
+  position: relative;
+  z-index: 5;
 }
 
 .container > * {
