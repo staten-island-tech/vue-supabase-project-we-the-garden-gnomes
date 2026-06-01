@@ -1,10 +1,8 @@
 <template>
   <div class="page">
-    <div class="background-photos" aria-hidden="true">
-      <img src="/DirtBackground.png" alt="dirt background" class="bg dirt" />
-      <img src="/GardenFrame.png" alt="garden frame" class="bg frame" />
-      <img src="/ShopButton.png" alt="shop button" class="bg shop" />
-    </div>
+    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true" />
+    <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
+    <img src="/ShopButton.png" alt="shop button" class="bg-shop" aria-hidden="true" />
 
     <div class="container">
       <Water />
@@ -46,6 +44,7 @@ import Flowers from '../components/flowers.vue'
   z-index: 0;
 }
 
+
 .background-photos .bg {
   position: absolute;
   left: 50%;
@@ -56,7 +55,7 @@ import Flowers from '../components/flowers.vue'
   max-width: 100%;
 }
 
-.background-photos .dirt {
+.bg-dirt {
   position: fixed;
   left: 0;
   right: 0;
@@ -66,15 +65,33 @@ import Flowers from '../components/flowers.vue'
   width: 100%;
   height: 30vh;
   object-fit: cover;
-  z-index: 1;
+  z-index: 8;
+  pointer-events: none;
 }
 
-.background-photos .frame {
-  z-index: 2;
+
+.bg-frame {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 9;
+  transform: scale(1.03);
+  transform-origin: center center;
+  pointer-events: none;
 }
 
-.background-photos .shop {
-  z-index: 3;
+.bg-shop {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: top center;
+  width: 150px;
+  max-width: 30vw;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .container {
@@ -86,7 +103,7 @@ import Flowers from '../components/flowers.vue'
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
-  z-index: 5;
+  z-index: 4;
 }
 
 .container > * {
