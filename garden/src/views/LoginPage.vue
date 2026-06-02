@@ -33,6 +33,7 @@ const handleLogin = async () => {
     alert('Check your email for the login link!')
   } catch (error) {
     if (error instanceof Error) {
+      console.log(error)
       alert(error.message)
     }
   } finally {
