@@ -2,12 +2,21 @@
   <div class="page">
     <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true" />
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
-    <img src="/ShopButton.png" alt="shop button" class="bg-shop" aria-hidden="true" />
+    <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
+
+    <div class="inventory-floating" aria-hidden="false">
+      <Inventory />
+    </div>
 
     <div class="container">
       <Water />
-      <Inventory />
-      <Flowers />
+    </div>
+
+    <div v-if="showShop" class="shop-overlay" @click.self="closeShop">
+      <div class="shop-panel" role="dialog" aria-modal="true" aria-label="Flower shop">
+        <button class="shop-close" @click="closeShop" aria-label="Close shop">×</button>
+        <Flowers />
+      </div>
     </div>
 
     <div class="dirt-bar" aria-hidden="true"></div>
@@ -15,9 +24,20 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import Water from '../components/water.vue'
 import Inventory from '../components/inventory.vue'
 import Flowers from '../components/flowers.vue'
+
+const showShop = ref(false)
+
+function openShop() {
+  showShop.value = true
+}
+
+function closeShop() {
+  showShop.value = false
+}
 </script>
 
 <style scoped>
@@ -85,13 +105,14 @@ import Flowers from '../components/flowers.vue'
 .bg-shop {
   position: fixed;
   top: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  transform-origin: top center;
+  left: 1rem;
+  transform: none;
+  transform-origin: top left;
   width: 150px;
   max-width: 30vw;
   z-index: 10;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .container {
@@ -103,7 +124,48 @@ import Flowers from '../components/flowers.vue'
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
-  z-index: 4;
+    z-index: 20;
+}
+
+.inventory-floating {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 320px;
+  max-width: 30vw;
+  z-index: 30;
+}
+
+.shop-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 6rem;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 40;
+}
+
+.shop-panel {
+  position: relative;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 0.75rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  width: min(960px, 95%);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.shop-close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.25rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .container > * {

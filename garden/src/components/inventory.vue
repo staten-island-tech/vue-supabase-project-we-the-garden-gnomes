@@ -13,14 +13,15 @@
       </div>
 
       <div v-else>
-        <div
-          v-for="item in flowerStore.inventory"
-          :key="item.name"
-          class="inventory-item"
-        >
-          <span>{{ item.name }}</span>
-          <span>{{ item.quantity }}</span>
-        </div>
+            <div
+              v-for="item in flowerStore.inventory"
+              :key="item.name"
+              class="inventory-item"
+            >
+              <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
+              <span class="inventory-name">{{ item.name }}</span>
+              <span class="inventory-qty">{{ item.quantity }}</span>
+            </div>
       </div>
     </div>
   </section>
@@ -54,12 +55,28 @@ const flowerStore = useFlowerStore()
 
 .inventory-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
   padding: 0.9rem 1rem;
   border-radius: 0.85rem;
   background: #f8fafc;
   font-weight: 600;
+}
+
+.inventory-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.inventory-name {
+  font-weight: 600;
+}
+
+.inventory-qty {
+  margin-left: auto;
+  font-weight: 700;
 }
 
 .empty-state {
