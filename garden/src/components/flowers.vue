@@ -14,6 +14,9 @@
             <span>Buy: ${{ flower.buyPrice }}</span>
             <span>Sell: ${{ flower.sellPrice }}</span>
           </div>
+          <button class="add-button" type="button" @click="store.addToInventory(flower)">
+            Add to Inventory
+          </button>
         </div>
       </article>
     </div>
@@ -42,7 +45,7 @@ const store = useFlowerStore()
 .flower-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .flower-card {
@@ -82,5 +85,21 @@ const store = useFlowerStore()
   margin-top: 0.75rem;
   font-weight: 600;
   color: #334155;
+}
+
+.add-button {
+  width: 100%;
+  margin-top: 0.9rem;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-radius: 0.85rem;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background: #1d4ed8;
 }
 </style>
