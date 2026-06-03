@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true" />
+    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true"/>
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
     <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
 
@@ -82,8 +82,8 @@ function closeShop() {
   bottom: 0;
   top: auto;
   transform: none;
-  width: 100%;
-  height: 30vh;
+  width: 100.5%;
+  height: 100.5%;
   object-fit: cover;
   z-index: 8;
   pointer-events: none;
@@ -93,8 +93,10 @@ function closeShop() {
 .bg-frame {
   position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  margin-top: 1%;
+  margin-left: 1.5%;
+  width: 97%;
+  height: 97%;
   object-fit: cover;
   z-index: 9;
   transform: scale(1.03);
@@ -104,11 +106,11 @@ function closeShop() {
 
 .bg-shop {
   position: fixed;
-  top: 1rem;
-  left: 1rem;
+  top: 3.5rem;
+  left: 3rem;
   transform: none;
   transform-origin: top left;
-  width: 150px;
+  width: 260px;
   max-width: 30vw;
   z-index: 10;
   pointer-events: auto;
