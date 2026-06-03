@@ -42,13 +42,14 @@ function closeShop() {
 
 <style scoped>
 .page {
-  position: relative;
+  position: left;
+  background-color: aliceblue;
   min-height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: rem;
   padding-bottom: 8rem;
 }
 
@@ -93,7 +94,7 @@ function closeShop() {
 .bg-frame {
   position: fixed;
   inset: 0;
-  margin-top: 1%;
+  margin-top: 0.9%;
   margin-left: 1.5%;
   width: 97%;
   height: 97%;
@@ -106,11 +107,11 @@ function closeShop() {
 
 .bg-shop {
   position: fixed;
-  top: 3.5rem;
-  left: 3rem;
+  top: 3rem;
+  left: 3.5rem;
   transform: none;
   transform-origin: top left;
-  width: 260px;
+  width: 275px;
   max-width: 30vw;
   z-index: 10;
   pointer-events: auto;
@@ -151,13 +152,14 @@ function closeShop() {
 
 .shop-panel {
   position: relative;
-  background: rgba(255, 255, 255, 0.98);
+  background: transparent;
   border-radius: 0.75rem;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
   width: min(960px, 95%);
   max-height: 80vh;
   overflow: auto;
   padding: 1rem;
+  background-image: url("ShopButton.png");
 }
 
 .shop-close {
