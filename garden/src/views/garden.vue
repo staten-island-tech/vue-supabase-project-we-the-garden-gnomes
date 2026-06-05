@@ -25,8 +25,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import Water from '../components/water.vue'
 import Inventory from '../components/inventory.vue'
+import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
 
 const showShop = ref(false)

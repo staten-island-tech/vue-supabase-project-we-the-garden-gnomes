@@ -22,8 +22,13 @@
       <span v-if="store.waterCount > displayCount" class="more">+{{ store.waterCount - displayCount }} more</span>
     </div>
 
-    <button class="buy-button" @click="store.buyWater()">
-      Buy 1 water droplet for ${{ store.waterPrice }}
+    <button
+      class="buy-button"
+      @click="store.buyWater()"
+      :aria-label="`Buy 1 water droplet for $${store.waterPrice}`"
+    >
+      <img src="/WaterButton.png" alt="Buy 1 water droplet" />
+      <span class="sr-only">Buy 1 water droplet for ${{ store.waterPrice }}</span>
     </button>
   </section>
 </template>
@@ -90,18 +95,37 @@ const displayCount = computed(() => Math.min(store.waterCount, 10))
   font-weight: 600;
 }
 
+/* replaced button styles to use image from public folder */
 .buy-button {
+  display: inline-block;
   width: 100%;
-  padding: 0.95rem 1.25rem;
+  padding: 0;
   border: none;
-  border-radius: 0.85rem;
-  background: #2563eb;
-  color: white;
-  font-size: 1rem;
+  background: transparent;
   cursor: pointer;
+  text-align: center;
+}
+.buy-button img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.85rem;
+  pointer-events: none; /* let clicks go to button */
 }
 
+/* visually hidden text for screen readers */
+.sr-only {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap;
+}
+
+/* fallback hover effect if image doesn't include it */
 .buy-button:hover {
-  background: #1d4ed8;
+  transform: translateY(-2px);
+  transition: transform 0.12s ease;
 }
 </style>
