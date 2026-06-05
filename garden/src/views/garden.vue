@@ -120,7 +120,7 @@ function closeShop() {
 
 .container {
   width: 100%;
-  max-width: 1600px;
+  max-width: 160px;
   display: flex;
   flex-wrap: nowrap;
   gap: 2rem;
@@ -131,12 +131,12 @@ function closeShop() {
 }
 
 .inventory-floating {
-  position: fixed;
   top: 1rem;
   right: 1rem;
-  width: 320px;
+  width: 330px;
   max-width: 30vw;
   z-index: 30;
+  position: relative;
 }
 
 .shop-overlay {
