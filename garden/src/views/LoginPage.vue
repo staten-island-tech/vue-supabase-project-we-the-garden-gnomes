@@ -22,13 +22,20 @@
 import { ref } from 'vue'
 import { supabase } from '../supabase'
 
+const supabaseClient = useSupabaseClient()
 const loading = ref(false)
 const email = ref('')
 
 const handleLogin = async () => {
   try {
     loading.value = true
-    const { error } = await supabase.auth.signInWithOtp({ email: email.value })
+    const { data, error } = await supabaseClient.auth.signInWithOtp({
+      email: email.value,
+      options: {
+        shouldCreateUser: true,
+        emailRedirectTo: `${window.location.origin}/account`,
+      },
+    })
     if (error) throw error
     alert('Check your email for the login link!')
   } catch (error) {
