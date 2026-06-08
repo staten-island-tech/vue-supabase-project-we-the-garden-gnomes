@@ -1,5 +1,6 @@
 <template>
-  <div></div>
+  <div><SignUp /></div>
+  <img src="" alt="" />
 </template>
 
 <script setup></script>
