@@ -1,13 +1,24 @@
 <template>
   <div class="page">
-    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true" />
+    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true"/>
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
     <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
 
-    <div class="top-right-controls" aria-hidden="false">
-      <Inventory />
+
+    <img
+      src="/InventoryButton.png"
+      alt="inventory button"
+      class="bg-inventory"
+      role="button"
+      tabindex="0"
+      @click="openInventory"
+    />
+
+
+    <div class="container">
       <Water />
     </div>
+
 
     <div v-if="showShop" class="shop-overlay" @click.self="closeShop">
       <div class="shop-panel" role="dialog" aria-modal="true" aria-label="Flower shop">
@@ -16,55 +27,114 @@
       </div>
     </div>
 
+
+    <div v-if="showInventory" class="inventory-overlay" @click.self="closeInventory">
+      <div class="inventory-panel" role="dialog" aria-modal="true" aria-label="Inventory">
+        <button class="inventory-close" @click="closeInventory" aria-label="Close inventory">×</button>
+        <Inventory />
+      </div>
+    </div>
+
+
     <div class="dirt-bar" aria-hidden="true"></div>
   </div>
 </template>
 
+
 <script setup>
 import { ref } from 'vue'
-import Water from '../components/water.vue'
 import Inventory from '../components/inventory.vue'
+import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
 
+
 const showShop = ref(false)
+const showInventory = ref(false)
+
 
 function openShop() {
   showShop.value = true
 }
 
+
 function closeShop() {
   showShop.value = false
 }
+
+
+function openInventory() {
+  showInventory.value = true
+}
+
+
+function closeInventory() {
+  showInventory.value = false
+}
 </script>
+
 
 <style scoped>
 .page {
-  position: relative;
+  position: left;
   background-color: aliceblue;
   min-height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: rem;
   padding-bottom: 8rem;
 }
+
+
+.background-photos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1600px;
+  height: auto;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+
+
+.background-photos .bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
 
 .bg-dirt {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  width: 100%;
-  height: 100%;
+  top: auto;
+  transform: none;
+  width: 100.5%;
+  height: 100.5%;
   object-fit: cover;
   z-index: 8;
   pointer-events: none;
 }
 
+
+
+
 .bg-frame {
   position: fixed;
   inset: 0;
+  margin-top: 0.9%;
+  margin-left: 1.5%;
   width: 97%;
   height: 97%;
   object-fit: cover;
@@ -74,26 +144,91 @@ function closeShop() {
   pointer-events: none;
 }
 
+
 .bg-shop {
   position: fixed;
-  top: 3rem;
-  left: 3.5rem;
-  width: 275px;
+  top: 4%;
+  left: 3%;
+  transform: none;
+  transform-origin: top left;
+  width: 16%;
   max-width: 30vw;
   z-index: 10;
   pointer-events: auto;
   cursor: pointer;
 }
 
-.top-right-controls {
+
+.bg-inventory {
   position: fixed;
+  top: 0rem;
+  right: 12rem;
+  width: 480px;
+  max-width: 30vw;
+  z-index: 30;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+
+.inventory-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5rem;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 40;
+}
+
+
+.inventory-panel {
+  position: relative;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  width: min(640px, 95%);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 1rem;
+}
+
+
+.inventory-close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.25rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+
+.container {
+  width: 100%;
+  max-width: 160px;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  position: relative;
+    z-index: 20;
+}
+
+
+/* keep original inventory-floating styles in case needed elsewhere */
+.inventory-floating {
   top: 1rem;
   right: 1rem;
-  display: flex;
-  gap: 1rem;
-  align-items: center;
+  width: 330px;
+  max-width: 30vw;
   z-index: 30;
+  position: relative;
 }
+
 
 .shop-overlay {
   position: fixed;
@@ -106,6 +241,7 @@ function closeShop() {
   z-index: 40;
 }
 
+
 .shop-panel {
   position: relative;
   background: transparent;
@@ -115,8 +251,9 @@ function closeShop() {
   max-height: 80vh;
   overflow: auto;
   padding: 1rem;
-  background-image: url('/ShopButton.png');
+  background-image: url("ShopButton.png");
 }
+
 
 .shop-close {
   position: absolute;
@@ -127,6 +264,13 @@ function closeShop() {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
+
+.container > * {
+  flex: 1 1 calc(33.333% - 1.33rem);
+  min-width: 280px;
+}
+
 
 .dirt-bar {
   position: fixed;
@@ -139,3 +283,7 @@ function closeShop() {
   z-index: -1;
 }
 </style>
+
+
+
+

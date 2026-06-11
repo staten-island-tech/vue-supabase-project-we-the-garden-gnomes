@@ -24,13 +24,16 @@ const store = useCounterStore()
 }
 
 .button-wrap {
-  display: flex;
-  justify-content: center;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
+  display: block;
 }
 
 .water-button {
-  width: 140px;
-  height: 140px;
+  width: 120px;
+  height: auto;
   cursor: pointer;
   background: transparent;
   display: block;
