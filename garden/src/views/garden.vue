@@ -4,9 +4,15 @@
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
     <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
 
-    <div class="inventory-floating" aria-hidden="false">
-      <Inventory />
-    </div>
+    <!-- Inventory button (replaces inline Inventory component) -->
+    <img
+      src="/InventoryButton.png"
+      alt="inventory button"
+      class="bg-inventory"
+      role="button"
+      tabindex="0"
+      @click="openInventory"
+    />
 
     <div class="container">
       <Water />
@@ -16,6 +22,14 @@
       <div class="shop-panel" role="dialog" aria-modal="true" aria-label="Flower shop">
         <button class="shop-close" @click="closeShop" aria-label="Close shop">×</button>
         <Flowers />
+      </div>
+    </div>
+
+    <!-- Inventory modal -->
+    <div v-if="showInventory" class="inventory-overlay" @click.self="closeInventory">
+      <div class="inventory-panel" role="dialog" aria-modal="true" aria-label="Inventory">
+        <button class="inventory-close" @click="closeInventory" aria-label="Close inventory">×</button>
+        <Inventory />
       </div>
     </div>
 
@@ -30,6 +44,7 @@ import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
 
 const showShop = ref(false)
+const showInventory = ref(false)
 
 function openShop() {
   showShop.value = true
@@ -37,6 +52,14 @@ function openShop() {
 
 function closeShop() {
   showShop.value = false
+}
+
+function openInventory() {
+  showInventory.value = true
+}
+
+function closeInventory() {
+  showInventory.value = false
 }
 </script>
 
@@ -118,6 +141,51 @@ function closeShop() {
   cursor: pointer;
 }
 
+/* Inventory button position */
+.bg-inventory {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  width: 220px;
+  max-width: 30vw;
+  z-index: 30;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* Inventory modal */
+.inventory-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5rem;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 40;
+}
+
+.inventory-panel {
+  position: relative;
+  background: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  width: min(640px, 95%);
+  max-height: 80vh;
+  overflow: auto;
+  padding: 1rem;
+}
+
+.inventory-close {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.25rem;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
 .container {
   width: 100%;
   max-width: 160px;
@@ -130,6 +198,7 @@ function closeShop() {
     z-index: 20;
 }
 
+/* keep original inventory-floating styles in case needed elsewhere */
 .inventory-floating {
   top: 1rem;
   right: 1rem;
