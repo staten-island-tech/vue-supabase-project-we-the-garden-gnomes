@@ -8,12 +8,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: GardenView,
     },
     {
-      path: '/sign',
+      path: '/',
       name: 'login',
       component: SignInorUp,
     },

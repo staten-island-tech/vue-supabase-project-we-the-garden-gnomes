@@ -21,8 +21,11 @@ const handleRegister = async () => {
     const { data, error } = await supabase.auth.signUp({
       email: email.value,
       password: password.value,
+      options: {
+        emailRedirectTo: 'http://localhost:5173/home',
+      },
     })
-    
+
     if (error) throw error
     alert('Registration successful! Please check your email for a confirmation link.')
   } catch (error) {
