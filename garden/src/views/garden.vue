@@ -14,6 +14,17 @@
       @click="openInventory"
     />
 
+    <div class="floating-layer" aria-hidden="true">
+      <img
+        v-for="f in flowerStore.floating"
+        :key="f.uid"
+        :src="f.imageUrl"
+        class="floating-flower"
+        :style="{ left: f.x + 'px', top: f.y + 'px' }"
+        @animationend="flowerStore.removeFloating(f.uid)"
+      />
+    </div>
+
 
     <div class="container">
       <Water />
@@ -46,10 +57,12 @@ import { ref } from 'vue'
 import Inventory from '../components/inventory.vue'
 import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
+import { useFlowerStore } from '../stores/flowers'
 
 
 const showShop = ref(false)
 const showInventory = ref(false)
+const flowerStore = useFlowerStore()
 
 
 function openShop() {
@@ -281,6 +294,26 @@ function closeInventory() {
   background: #8b5a2b;
   box-shadow: inset 0 8px 0 rgba(255, 255, 255, 0.05);
   z-index: -1;
+}
+/* floating flowers rendered above everything */
+.floating-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+.floating-flower {
+  position: absolute;
+  width: 96px;
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: float-pop 800ms cubic-bezier(.2,.9,.3,1);
+}
+@keyframes float-pop {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0 }
+  60% { transform: translate(-50%, -70%) scale(1.08); opacity: 1 }
+  100% { transform: translate(-50%, -120%) scale(1); opacity: 1 }
 }
 </style>
 

@@ -14,7 +14,7 @@
             <span>Buy: ${{ flower.buyPrice }}</span>
             <span>Sell: ${{ flower.sellPrice }}</span>
           </div>
-          <button class="add-button" type="button" @click="store.addToInventory(flower)">
+          <button class="add-button" type="button" @click="handleAdd(flower, $event)">
             Add to Inventory
           </button>
         </div>
@@ -27,6 +27,15 @@
 import { useFlowerStore } from '../stores/flowers'
 
 const store = useFlowerStore()
+
+function handleAdd(flower, ev) {
+  // add to inventory as before
+  store.addToInventory(flower)
+  // compute viewport coords for floating image
+  const x = ev?.clientX ?? Math.max(window.innerWidth - 120, 0)
+  const y = ev?.clientY ?? 120
+  store.addFloating({ imageUrl: flower.imageUrl || '', x, y })
+}
 </script>
 
 <style scoped>

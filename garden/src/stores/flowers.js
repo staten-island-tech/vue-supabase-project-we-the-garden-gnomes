@@ -17,6 +17,7 @@ export const useFlowerStore = defineStore('flower', () => {
   ])
 
   const inventory = ref([])
+  const floating = ref([])
 
   function addToInventory(flower) {
     const existing = inventory.value.find((item) => item.name === flower.name)
@@ -31,9 +32,24 @@ export const useFlowerStore = defineStore('flower', () => {
     }
   }
 
+  function addFloating({ imageUrl = '', x = 0, y = 0 } = {}) {
+    const uid = Date.now().toString() + Math.floor(Math.random() * 1000)
+    floating.value.push({ uid, imageUrl, x, y })
+    // auto-remove after animation (2.5s)
+    setTimeout(() => removeFloating(uid), 2500)
+  }
+
+  function removeFloating(uid) {
+    floating.value = floating.value.filter((f) => f.uid !== uid)
+  }
+
   return {
     flowers,
     inventory,
     addToInventory,
+    // floating images rendered in the garden
+    floating,
+    addFloating,
+    removeFloating,
   }
 })
