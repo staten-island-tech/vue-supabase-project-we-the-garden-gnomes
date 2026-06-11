@@ -21,7 +21,6 @@
         :src="f.imageUrl"
         class="floating-flower"
         :style="{ left: f.x + 'px', top: f.y + 'px' }"
-        @animationend="flowerStore.removeFloating(f.uid)"
       />
     </div>
 
