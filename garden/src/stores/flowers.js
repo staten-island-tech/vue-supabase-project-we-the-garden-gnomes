@@ -35,8 +35,6 @@ export const useFlowerStore = defineStore('flower', () => {
   function addFloating({ imageUrl = '', x = 0, y = 0 } = {}) {
     const uid = Date.now().toString() + Math.floor(Math.random() * 1000)
     floating.value.push({ uid, imageUrl, x, y })
-    // auto-remove after animation (2.5s)
-    setTimeout(() => removeFloating(uid), 2500)
   }
 
   function removeFloating(uid) {

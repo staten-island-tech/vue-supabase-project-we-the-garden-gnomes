@@ -17,6 +17,9 @@
               v-for="item in flowerStore.inventory"
               :key="item.name"
               class="inventory-item"
+              role="button"
+              tabindex="0"
+              @click="placeFromInventory(item, $event)"
             >
               <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
               <span class="inventory-name">{{ item.name }}</span>
@@ -33,6 +36,12 @@ import { useFlowerStore } from '../stores/flowers'
 
 const waterStore = useCounterStore()
 const flowerStore = useFlowerStore()
+
+function placeFromInventory(item, ev) {
+  const x = ev?.clientX ?? Math.round(window.innerWidth / 2)
+  const y = ev?.clientY ?? Math.round(window.innerHeight / 2)
+  flowerStore.addFloating({ imageUrl: item.imageUrl || '', x, y })
+}
 </script>
 
 <style scoped>
@@ -61,6 +70,7 @@ const flowerStore = useFlowerStore()
   border-radius: 0.85rem;
   background: #f8fafc;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .inventory-thumb {
