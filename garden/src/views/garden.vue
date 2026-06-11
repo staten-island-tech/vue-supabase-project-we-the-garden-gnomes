@@ -107,11 +107,11 @@ function closeShop() {
 
 .bg-shop {
   position: fixed;
-  top: 3rem;
-  left: 3.5rem;
+  top: 4%;
+  left: 3%;
   transform: none;
   transform-origin: top left;
-  width: 275px;
+  width: 16%;
   max-width: 30vw;
   z-index: 10;
   pointer-events: auto;
