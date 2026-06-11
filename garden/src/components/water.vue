@@ -129,3 +129,4 @@ const displayCount = computed(() => Math.min(store.waterCount, 10))
   transition: transform 0.12s ease;
 }
 </style>
+
