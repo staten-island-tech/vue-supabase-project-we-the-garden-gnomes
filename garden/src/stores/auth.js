@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
-const UserStore = defineStore('playerStore', () => {
+const UserStore = defineStore('userStore', () => {
   const uuid = ref('')
 
   return { uuid }
