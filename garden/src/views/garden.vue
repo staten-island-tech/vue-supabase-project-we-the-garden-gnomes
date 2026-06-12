@@ -21,9 +21,6 @@
         :src="f.imageUrl"
         class="floating-flower"
         :style="{ left: f.x + 'px', top: f.y + 'px' }"
-        @pointerdown="(ev) => startDrag(ev, f)"
-        draggable="false"
-        :alt="`floating ${f.uid}`"
       />
     </div>
 
@@ -55,7 +52,7 @@
 
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref } from 'vue'
 import Inventory from '../components/inventory.vue'
 import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
@@ -65,42 +62,6 @@ import { useFlowerStore } from '../stores/flowers'
 const showShop = ref(false)
 const showInventory = ref(false)
 const flowerStore = useFlowerStore()
-
-// dragging state for floating flowers
-const draggingUid = ref(null)
-const dragOffset = ref({ x: 0, y: 0 })
-
-function startDrag(ev, f) {
-  ev.preventDefault()
-  draggingUid.value = f.uid
-  dragOffset.value.x = ev.clientX - f.x
-  dragOffset.value.y = ev.clientY - f.y
-  try { ev.target.setPointerCapture(ev.pointerId) } catch (e) {}
-}
-
-function onPointerMove(ev) {
-  if (!draggingUid.value) return
-  const f = flowerStore.floating.find((ff) => ff.uid === draggingUid.value)
-  if (!f) return
-  f.x = ev.clientX - dragOffset.value.x
-  f.y = ev.clientY - dragOffset.value.y
-}
-
-function endDrag(ev) {
-  if (!draggingUid.value) return
-  try { ev.target.releasePointerCapture && ev.target.releasePointerCapture(ev.pointerId) } catch (e) {}
-  draggingUid.value = null
-}
-
-onMounted(() => {
-  window.addEventListener('pointermove', onPointerMove)
-  window.addEventListener('pointerup', endDrag)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('pointermove', onPointerMove)
-  window.removeEventListener('pointerup', endDrag)
-})
 
 
 function openShop() {
@@ -337,7 +298,7 @@ function closeInventory() {
 .floating-layer {
   position: fixed;
   inset: 0;
-  pointer-events: auto;
+  pointer-events: none;
   z-index: 99999;
 }
 .floating-flower {
@@ -345,15 +306,8 @@ function closeInventory() {
   width: 96px;
   height: auto;
   transform: translate(-50%, -50%);
-  pointer-events: auto;
-  touch-action: none;
-  user-select: none;
-  cursor: grab;
-  -webkit-user-drag: none;
+  pointer-events: none;
   animation: float-pop 800ms cubic-bezier(.2,.9,.3,1);
-}
-.floating-flower:active {
-  cursor: grabbing;
 }
 @keyframes float-pop {
   0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0 }
