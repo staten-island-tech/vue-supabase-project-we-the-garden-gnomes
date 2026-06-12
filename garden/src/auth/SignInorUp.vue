@@ -1,16 +1,16 @@
 <template>
   <div class="sign">
-    <Signup />
+    <SignUp />
   </div>
   <div class="log">
-    <Login />
+    <LogIn />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import Signup from '@/components/Signup.vue'
-import Login from '@/components/Login.vue'
+import SignUp from '@/components/SignUp.vue'
+import LogIn from '@/components/LogIn.vue'
 </script>
 
 <style lang="scss" scoped></style>

@@ -22,7 +22,7 @@ const handleRegister = async () => {
       email: email.value,
       password: password.value,
       options: {
-        emailRedirectTo: 'http://localhost:5173/home',
+        emailRedirectTo: '${window.location.origin}/home',
       },
     })
 
