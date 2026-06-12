@@ -18,7 +18,7 @@ const password = ref('')
 
 const handleRegister = async () => {
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signInwithOtp({
       email: email.value,
       password: password.value,
       options: {
