@@ -12,11 +12,10 @@
 <script setup>
 import { ref } from 'vue'
 import { supabase } from '../supabase'
-import { useRoute } from 'vue-router'
 
 const email = ref('')
 const password = ref('')
-const router = useRouter()
+
 const handleLogin = async () => {
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -26,7 +25,6 @@ const handleLogin = async () => {
 
     if (error) throw error
     alert('Logged in successfully!')
-    router.push('/home')
     console.log('User data:', data.user)
   } catch (error) {
     alert(error.message)

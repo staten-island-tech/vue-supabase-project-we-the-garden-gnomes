@@ -3,7 +3,6 @@
     <h2>Create an Account</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="Email" required />
-      <input v-model="password" type="password" placeholder="Password" required />
       <button type="submit">Register</button>
     </form>
   </div>
@@ -11,16 +10,15 @@
 
 <script setup>
 import { ref } from 'vue'
-import { supabase } from '../supabase'
 
 const email = ref('')
-const password = ref('')
-
+const loading = ref(false)
+const supabaseClient = useSupabaseClient()
 const handleRegister = async () => {
   try {
-    const { data, error } = await supabase.auth.signInwithOtp({
+    loading.value = true
+    const { data, error } = await supabaseClient.auth.signInWithOtp({
       email: email.value,
-      password: password.value,
       options: {
         emailRedirectTo: '${window.location.origin}/home',
       },
@@ -30,6 +28,8 @@ const handleRegister = async () => {
     alert('Registration successful! Please check your email for a confirmation link.')
   } catch (error) {
     alert(error.message)
+  } finally {
+    loading.value = false
   }
 }
 </script>
