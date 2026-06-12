@@ -21,9 +21,13 @@
         :src="f.imageUrl"
         class="floating-flower"
         :style="{ left: f.x + 'px', top: f.y + 'px' }"
+        @pointerdown="(ev) => startDrag(ev, f)"
+        draggable="false"
+        :alt="`floating-${f.uid}`"
       />
     </div>
 
+    <Money />
 
     <div class="container">
       <Water />
@@ -52,10 +56,11 @@
 
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import Inventory from '../components/inventory.vue'
 import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
+import Money from '../components/money.vue'
 import { useFlowerStore } from '../stores/flowers'
 
 
@@ -82,6 +87,42 @@ function openInventory() {
 function closeInventory() {
   showInventory.value = false
 }
+
+// dragging state for floating flowers
+const draggingUid = ref(null)
+const dragOffset = ref({ x: 0, y: 0 })
+
+function startDrag(ev, f) {
+  ev.preventDefault()
+  draggingUid.value = f.uid
+  dragOffset.value.x = ev.clientX - f.x
+  dragOffset.value.y = ev.clientY - f.y
+  try { ev.target.setPointerCapture && ev.target.setPointerCapture(ev.pointerId) } catch (e) {}
+}
+
+function onPointerMove(ev) {
+  if (!draggingUid.value) return
+  const f = flowerStore.floating.find((ff) => ff.uid === draggingUid.value)
+  if (!f) return
+  f.x = ev.clientX - dragOffset.value.x
+  f.y = ev.clientY - dragOffset.value.y
+}
+
+function endDrag(ev) {
+  if (!draggingUid.value) return
+  try { ev.target.releasePointerCapture && ev.target.releasePointerCapture(ev.pointerId) } catch (e) {}
+  draggingUid.value = null
+}
+
+onMounted(() => {
+  window.addEventListener('pointermove', onPointerMove)
+  window.addEventListener('pointerup', endDrag)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('pointermove', onPointerMove)
+  window.removeEventListener('pointerup', endDrag)
+})
 </script>
 
 
@@ -298,16 +339,26 @@ function closeInventory() {
 .floating-layer {
   position: fixed;
   inset: 0;
+  /* allow pointer events to pass through the empty areas of the layer */
   pointer-events: none;
-  z-index: 99999;
+  /* keep floating images above background but below overlays (shop/inventory) */
+  z-index: 20;
 }
 .floating-flower {
   position: absolute;
   width: 96px;
   height: auto;
   transform: translate(-50%, -50%);
-  pointer-events: none;
+  /* flowers themselves should receive pointer events */
+  pointer-events: auto;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  -webkit-user-drag: none;
   animation: float-pop 800ms cubic-bezier(.2,.9,.3,1);
+}
+.floating-flower:active {
+  cursor: grabbing;
 }
 @keyframes float-pop {
   0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0 }

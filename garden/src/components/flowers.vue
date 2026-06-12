@@ -14,7 +14,12 @@
             <span>Buy: ${{ flower.buyPrice }}</span>
             <span>Sell: ${{ flower.sellPrice }}</span>
           </div>
-          <button class="add-button" type="button" @click="handleAdd(flower, $event)">
+          <button
+            class="add-button"
+            type="button"
+            :disabled="counter.totalMoney < flower.buyPrice"
+            @click="handleAdd(flower, $event)"
+          >
             Add to Inventory
           </button>
         </div>
@@ -25,16 +30,25 @@
 
 <script setup>
 import { useFlowerStore } from '../stores/flowers'
+import { useCounterStore } from '../stores/counter'
 
 const store = useFlowerStore()
+const counter = useCounterStore()
 
 function handleAdd(flower, ev) {
   // add to inventory as before
+  const price = flower.buyPrice || 0
+  if (counter.totalMoney < price) {
+    window.alert('Not enough money to purchase this flower.')
+    return
+  }
+  // charge user and add to inventory
+  counter.spendMoney(price)
   store.addToInventory(flower)
-  // compute viewport coords for floating image
+  // add a floating visual for feedback, but mark it as not yet eligible to earn on watering
   const x = ev?.clientX ?? Math.max(window.innerWidth - 120, 0)
   const y = ev?.clientY ?? 120
-  store.addFloating({ imageUrl: flower.imageUrl || '', x, y })
+  store.addFloating({ imageUrl: flower.imageUrl || '', x, y, name: flower.name, canEarn: false })
 }
 </script>
 

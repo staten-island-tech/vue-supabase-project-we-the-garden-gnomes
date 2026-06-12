@@ -1,15 +1,29 @@
 <template>
   <section class="water-card">
     <div class="button-wrap">
-      <img src="/WaterButton.png" alt="Water Button" class="water-button" @click="store.buyWater()" />
+      <img src="/WaterButton.png" alt="Water Button" class="water-button" @click="handleWater" />
     </div>
   </section>
 </template>
 
 <script setup>
 import { useCounterStore } from '../stores/counter'
+import { useFlowerStore } from '../stores/flowers'
 
-const store = useCounterStore()
+const counter = useCounterStore()
+const flowers = useFlowerStore()
+
+function handleWater() {
+  // attempt to buy water; abort if insufficient funds
+  const ok = counter.buyWater()
+  if (!ok) {
+    window.alert('Not enough money to buy water.')
+    return
+  }
+  // water all floating flowers and earn money based on sellPrice
+  const earned = flowers.waterFloating()
+  if (earned) counter.earnMoney(earned)
+}
 </script>
 
 <style scoped>
