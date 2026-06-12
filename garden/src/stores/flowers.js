@@ -18,6 +18,8 @@ export const useFlowerStore = defineStore('flower', () => {
 
   const inventory = ref([])
   const floating = ref([])
+  // when true, the UI is waiting for the user to click a floating flower
+  const pendingWaterSelection = ref(false)
 
   function addToInventory(flower) {
     const existing = inventory.value.find((item) => item.name === flower.name)
@@ -35,6 +37,14 @@ export const useFlowerStore = defineStore('flower', () => {
   function addFloating({ imageUrl = '', x = 0, y = 0, name = '', canEarn = true } = {}) {
     const uid = Date.now().toString() + Math.floor(Math.random() * 1000)
     floating.value.push({ uid, imageUrl, x, y, name, canEarn })
+  }
+
+  function startSelection() {
+    pendingWaterSelection.value = true
+  }
+
+  function stopSelection() {
+    pendingWaterSelection.value = false
   }
 
   // water floating flowers and return total earned amount
@@ -65,7 +75,7 @@ export const useFlowerStore = defineStore('flower', () => {
     const sellCount = Math.min(amount, item.quantity)
     // find price from flowers list
     const fl = flowers.value.find((f) => f.name === name)
-    const price = (fl && fl.sellPrice) ? fl.sellPrice : 0
+    const price = fl && fl.sellPrice ? fl.sellPrice : 0
     item.quantity -= sellCount
     if (item.quantity <= 0) {
       // remove item entirely
@@ -78,11 +88,14 @@ export const useFlowerStore = defineStore('flower', () => {
   return {
     flowers,
     inventory,
+    pendingWaterSelection,
     addToInventory,
     // floating images rendered in the garden
     floating,
     addFloating,
     waterFloating,
+    startSelection,
+    stopSelection,
     sellFromInventory,
     removeFloating,
   }

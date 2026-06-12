@@ -21,6 +21,10 @@ export const useCounterStore = defineStore('counter', () => {
     totalMoney.value += amount
   }
 
+  function addWater(amount = 1) {
+    waterCount.value += amount
+  }
+
   function spendMoney(amount = 0) {
     if (totalMoney.value < amount) return false
     totalMoney.value -= amount
@@ -32,6 +36,7 @@ export const useCounterStore = defineStore('counter', () => {
     waterPrice,
     totalMoney,
     buyWater,
+    addWater,
     earnMoney,
     spendMoney,
   }

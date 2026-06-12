@@ -1,9 +1,15 @@
 <template>
   <div class="page">
-    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true"/>
+    <img src="/DirtBackground.png" alt="dirt background" class="bg-dirt" aria-hidden="true" />
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
-    <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
-
+    <img
+      src="/ShopButton.png"
+      alt="shop button"
+      class="bg-shop"
+      role="button"
+      tabindex="0"
+      @click="openShop"
+    />
 
     <img
       src="/InventoryButton.png"
@@ -20,8 +26,13 @@
         :key="f.uid"
         :src="f.imageUrl"
         class="floating-flower"
-        :style="{ left: f.x + 'px', top: f.y + 'px' }"
+        :style="{
+          left: f.x + 'px',
+          top: f.y + 'px',
+          transform: 'translate(-50%, -50%) scale(' + (f.scale || 1) + ')',
+        }"
         @pointerdown="(ev) => startDrag(ev, f)"
+        @pointerup="(ev) => handleFlowerClick(ev, f)"
         draggable="false"
         :alt="`floating-${f.uid}`"
       />
@@ -33,7 +44,6 @@
       <Water />
     </div>
 
-
     <div v-if="showShop" class="shop-overlay" @click.self="closeShop">
       <div class="shop-panel" role="dialog" aria-modal="true" aria-label="Flower shop">
         <button class="shop-close" @click="closeShop" aria-label="Close shop">×</button>
@@ -41,19 +51,18 @@
       </div>
     </div>
 
-
     <div v-if="showInventory" class="inventory-overlay" @click.self="closeInventory">
       <div class="inventory-panel" role="dialog" aria-modal="true" aria-label="Inventory">
-        <button class="inventory-close" @click="closeInventory" aria-label="Close inventory">×</button>
+        <button class="inventory-close" @click="closeInventory" aria-label="Close inventory">
+          ×
+        </button>
         <Inventory />
       </div>
     </div>
 
-
     <div class="dirt-bar" aria-hidden="true"></div>
   </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
@@ -62,27 +71,24 @@ import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
 import Money from '../components/money.vue'
 import { useFlowerStore } from '../stores/flowers'
-
+import { useCounterStore } from '../stores/counter'
 
 const showShop = ref(false)
 const showInventory = ref(false)
 const flowerStore = useFlowerStore()
-
+const counter = useCounterStore()
 
 function openShop() {
   showShop.value = true
 }
 
-
 function closeShop() {
   showShop.value = false
 }
 
-
 function openInventory() {
   showInventory.value = true
 }
-
 
 function closeInventory() {
   showInventory.value = false
@@ -97,7 +103,24 @@ function startDrag(ev, f) {
   draggingUid.value = f.uid
   dragOffset.value.x = ev.clientX - f.x
   dragOffset.value.y = ev.clientY - f.y
-  try { ev.target.setPointerCapture && ev.target.setPointerCapture(ev.pointerId) } catch (e) {}
+  try {
+    ev.target.setPointerCapture && ev.target.setPointerCapture(ev.pointerId)
+  } catch (e) {}
+}
+
+function handleFlowerClick(ev, f) {
+  // if we're waiting for a flower selection from the Water button,
+  // consume the click and add water
+  if (flowerStore.pendingWaterSelection) {
+    // add water resource and reward money for watering a selected flower
+    counter.addWater(5)
+    counter.earnMoney(5)
+    f.scale = (f.scale || 1) * 1.5
+    flowerStore.stopSelection()
+    window.alert('Added 5 water to your total and earned $5.')
+    ev.stopPropagation()
+    return
+  }
 }
 
 function onPointerMove(ev) {
@@ -110,7 +133,9 @@ function onPointerMove(ev) {
 
 function endDrag(ev) {
   if (!draggingUid.value) return
-  try { ev.target.releasePointerCapture && ev.target.releasePointerCapture(ev.pointerId) } catch (e) {}
+  try {
+    ev.target.releasePointerCapture && ev.target.releasePointerCapture(ev.pointerId)
+  } catch (e) {}
   draggingUid.value = null
 }
 
@@ -125,7 +150,6 @@ onUnmounted(() => {
 })
 </script>
 
-
 <style scoped>
 .page {
   position: left;
@@ -139,7 +163,6 @@ onUnmounted(() => {
   padding-bottom: 8rem;
 }
 
-
 .background-photos {
   position: absolute;
   top: 50%;
@@ -152,9 +175,6 @@ onUnmounted(() => {
   z-index: 0;
 }
 
-
-
-
 .background-photos .bg {
   position: absolute;
   left: 50%;
@@ -164,7 +184,6 @@ onUnmounted(() => {
   height: auto;
   max-width: 100%;
 }
-
 
 .bg-dirt {
   position: fixed;
@@ -180,9 +199,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-
-
-
 .bg-frame {
   position: fixed;
   inset: 0;
@@ -197,7 +213,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-
 .bg-shop {
   position: fixed;
   top: 4%;
@@ -211,7 +226,6 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-
 .bg-inventory {
   position: fixed;
   top: 0rem;
@@ -222,7 +236,6 @@ onUnmounted(() => {
   pointer-events: auto;
   cursor: pointer;
 }
-
 
 .inventory-overlay {
   position: fixed;
@@ -235,7 +248,6 @@ onUnmounted(() => {
   z-index: 40;
 }
 
-
 .inventory-panel {
   position: relative;
   background: white;
@@ -247,7 +259,6 @@ onUnmounted(() => {
   padding: 1rem;
 }
 
-
 .inventory-close {
   position: absolute;
   right: 0.75rem;
@@ -258,7 +269,6 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-
 .container {
   width: 100%;
   max-width: 160px;
@@ -268,9 +278,8 @@ onUnmounted(() => {
   align-items: flex-start;
   justify-content: space-between;
   position: relative;
-    z-index: 20;
+  z-index: 20;
 }
-
 
 /* keep original inventory-floating styles in case needed elsewhere */
 .inventory-floating {
@@ -281,7 +290,6 @@ onUnmounted(() => {
   z-index: 30;
   position: relative;
 }
-
 
 .shop-overlay {
   position: fixed;
@@ -294,7 +302,6 @@ onUnmounted(() => {
   z-index: 40;
 }
 
-
 .shop-panel {
   position: relative;
   background: transparent;
@@ -304,9 +311,8 @@ onUnmounted(() => {
   max-height: 80vh;
   overflow: auto;
   padding: 1rem;
-  background-image: url("ShopButton.png");
+  background-image: url('ShopButton.png');
 }
-
 
 .shop-close {
   position: absolute;
@@ -318,12 +324,10 @@ onUnmounted(() => {
   cursor: pointer;
 }
 
-
 .container > * {
   flex: 1 1 calc(33.333% - 1.33rem);
   min-width: 280px;
 }
-
 
 .dirt-bar {
   position: fixed;
@@ -355,18 +359,23 @@ onUnmounted(() => {
   user-select: none;
   cursor: grab;
   -webkit-user-drag: none;
-  animation: float-pop 800ms cubic-bezier(.2,.9,.3,1);
+  animation: float-pop 800ms cubic-bezier(0.2, 0.9, 0.3, 1);
 }
 .floating-flower:active {
   cursor: grabbing;
 }
 @keyframes float-pop {
-  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0 }
-  60% { transform: translate(-50%, -70%) scale(1.08); opacity: 1 }
-  100% { transform: translate(-50%, -120%) scale(1); opacity: 1 }
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(-50%, -70%) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -120%) scale(1);
+    opacity: 1;
+  }
 }
 </style>
-
-
-
-

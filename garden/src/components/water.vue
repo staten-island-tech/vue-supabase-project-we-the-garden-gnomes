@@ -20,9 +20,9 @@ function handleWater() {
     window.alert('Not enough money to buy water.')
     return
   }
-  // water all floating flowers and earn money based on sellPrice
-  const earned = flowers.waterFloating()
-  if (earned) counter.earnMoney(earned)
+  // instruct user to pick a flower to target for watering
+  window.alert('Please pick a flower image on the display to apply water to it.')
+  flowers.startSelection()
 }
 </script>
 
