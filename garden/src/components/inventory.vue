@@ -17,9 +17,6 @@
               v-for="item in flowerStore.inventory"
               :key="item.name"
               class="inventory-item"
-              role="button"
-              tabindex="0"
-              @click="placeFromInventory(item, $event)"
             >
               <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
               <span class="inventory-name">{{ item.name }}</span>
@@ -114,6 +111,11 @@ function sellOne(item) {
 
 .inventory-name {
   font-weight: 600;
+}
+
+.inventory-name[role="button"] {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .inventory-qty {
