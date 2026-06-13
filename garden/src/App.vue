@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { useAuthStore } from './stores/auth'
+
+const auth = useAuthStore()
+
+async function handleSignOut() {
+  await auth.signOut()
+}
 </script>
 
 <template>
@@ -9,6 +16,12 @@ import { RouterLink, RouterView } from 'vue-router'
         <h1>Garden</h1>
         <p>Grow your garden!!!!!</p>
       </div>
+      <nav>
+        <RouterLink to="/home">Home</RouterLink>
+        <span v-if="auth.isLoggedIn" class="mx-4">|</span>
+        <RouterLink v-if="!auth.isLoggedIn" to="/">Login</RouterLink>
+        <button v-else @click="handleSignOut" class="logout-button">Logout</button>
+      </nav>
     </header>
 
     <main>
