@@ -10,16 +10,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-<<<<<<< HEAD
-      path: '/login',
-      name: 'login',
-      component: LoginPage,
-    },
-    {
-      path: '/',
-=======
       path: '/home',
->>>>>>> WinnieWuBranch
       name: 'home',
       component: GardenView,
       meta: { requiresAuth: true },
@@ -32,20 +23,4 @@ const router = createRouter({
   ],
 })
 
-<<<<<<< HEAD
-router.beforeEach(async (to) => {
-  const authStore = useAuthStore()
-  await authStore.fetchUser()
-
-  if (to.name === 'login' && authStore.isLoggedIn) {
-    return { name: 'home' }
-  }
-
-  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-    return { name: 'login' }
-  }
-})
-
-=======
->>>>>>> WinnieWuBranch
 export default router
