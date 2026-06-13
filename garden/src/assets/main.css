@@ -1,5 +1,5 @@
 @import './base.css';
-@import "tailwindcss";
+@import 'tailwindcss';
 
 #app {
   max-width: 1280px;
@@ -8,10 +8,19 @@
   font-weight: normal;
 }
 
+body,
+button,
+input,
+textarea,
+select,
+optgroup {
+  color: #000000 !important;
+}
+
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: #000000;
   transition: 0.4s;
   padding: 3px;
 }
