@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div class="auth-container">
     <h2>Create an Account</h2>
     <form @submit.prevent="handleRegister">
@@ -9,9 +8,6 @@
       </button>
     </form>
   </div>
-=======
-  <div></div>
->>>>>>> parent of f7d34e7 (hbhh)
 </template>
 
 <script setup>
