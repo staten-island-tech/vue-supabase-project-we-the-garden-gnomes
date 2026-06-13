@@ -8,7 +8,11 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+<<<<<<< HEAD
       path: '/home',
+=======
+      path: '/',
+>>>>>>> parent of e22feca (.)
       name: 'home',
       component: GardenView,
     },
@@ -21,6 +25,7 @@ const router = createRouter({
   ],
 })
 
+<<<<<<< HEAD
 router.beforeEach(async (to) => {
   const authStore = useAuthStore()
   await authStore.fetchUser()
@@ -34,4 +39,7 @@ router.beforeEach(async (to) => {
   }
 })
 
+=======
+>>>>>>> parent of e22feca (.)
 export default router
+
