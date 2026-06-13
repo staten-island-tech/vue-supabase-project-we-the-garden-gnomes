@@ -1,10 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import GardenView from '../views/garden.vue'
-<<<<<<< HEAD
+
 import SignInorUp from '../auth/SignInorUp.vue'
 import { useAuthStore } from '../stores/auth'
-=======
->>>>>>> parent of 0f002a5 (Merge branch 'WinnieWuBranch')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,14 +12,12 @@ const router = createRouter({
       name: 'home',
       component: GardenView,
     },
-<<<<<<< HEAD
+
     {
       path: '/',
       name: 'login',
       component: SignInorUp,
     },
-=======
->>>>>>> parent of 0f002a5 (Merge branch 'WinnieWuBranch')
   ],
 })
 
@@ -39,4 +35,3 @@ router.beforeEach(async (to) => {
 })
 
 export default router
-
