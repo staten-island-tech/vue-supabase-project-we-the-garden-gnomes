@@ -21,6 +21,7 @@
               <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
               <span class="inventory-name">{{ item.name }}</span>
               <span class="inventory-qty">{{ item.quantity }}</span>
+              <button type="button" class="sell-button" aria-label="Sell one {{ item.name }}" @click.stop="sellOne(item)">Sell</button>
             </div>
       </div>
     </div>
@@ -28,11 +29,33 @@
 </template>
 
 <script setup>
-import { useCounterStore } from '../stores/counter'
 import { useFlowerStore } from '../stores/flowers'
+
+import { useCounterStore } from '../stores/counter'
 
 const waterStore = useCounterStore()
 const flowerStore = useFlowerStore()
+
+function placeFromInventory(item, ev) {
+  const x = ev?.clientX ?? Math.round(window.innerWidth / 2)
+  const y = ev?.clientY ?? Math.round(window.innerHeight / 2)
+  // placing from inventory should include the item name
+  // placed floating items become eligible to earn on watering
+  flowerStore.addFloating({ imageUrl: item.imageUrl || '', x, y, name: item.name, canEarn: true })
+}
+
+function sellOne(item) {
+  const earned = flowerStore.sellFromInventory(item.name, 1)
+  if (earned > 0) {
+    waterStore.earnMoney(earned)
+    // also remove one floating instance of this flower if present
+    const floating = flowerStore.floating.find((f) => f.name === item.name || f.imageUrl === item.imageUrl)
+    if (floating) {
+      flowerStore.removeFloating(floating.uid)
+    }
+  }
+}
+
 </script>
 
 <style scoped>
@@ -61,6 +84,7 @@ const flowerStore = useFlowerStore()
   border-radius: 0.85rem;
   background: #f8fafc;
   font-weight: 600;
+  cursor: pointer;
 }
 
 .inventory-thumb {
@@ -70,8 +94,28 @@ const flowerStore = useFlowerStore()
   border-radius: 0.5rem;
 }
 
+.sell-button {
+  margin-left: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.sell-button:focus {
+  outline: 2px solid rgba(59,130,246,0.6);
+  outline-offset: 2px;
+}
+
 .inventory-name {
   font-weight: 600;
+}
+
+.inventory-name[role="button"] {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 .inventory-qty {
