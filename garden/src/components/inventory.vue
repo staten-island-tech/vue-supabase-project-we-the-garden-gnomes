@@ -13,16 +13,19 @@
       </div>
 
       <div v-else>
-            <div
-              v-for="item in flowerStore.inventory"
-              :key="item.name"
-              class="inventory-item"
-            >
-              <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
-              <span class="inventory-name">{{ item.name }}</span>
-              <span class="inventory-qty">{{ item.quantity }}</span>
-              <button type="button" class="sell-button" aria-label="Sell one {{ item.name }}" @click.stop="sellOne(item)">Sell</button>
-            </div>
+        <div v-for="item in flowerStore.inventory" :key="item.name" class="inventory-item">
+          <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
+          <span class="inventory-name">{{ item.name }}</span>
+          <span class="inventory-qty">{{ item.quantity }}</span>
+          <button
+            type="button"
+            class="sell-button"
+            aria-label="Sell one {{ item.name }}"
+            @click.stop="sellOne(item)"
+          >
+            Sell
+          </button>
+        </div>
       </div>
     </div>
   </section>
@@ -49,13 +52,14 @@ function sellOne(item) {
   if (earned > 0) {
     waterStore.earnMoney(earned)
     // also remove one floating instance of this flower if present
-    const floating = flowerStore.floating.find((f) => f.name === item.name || f.imageUrl === item.imageUrl)
+    const floating = flowerStore.floating.find(
+      (f) => f.name === item.name || f.imageUrl === item.imageUrl,
+    )
     if (floating) {
       flowerStore.removeFloating(floating.uid)
     }
   }
 }
-
 </script>
 
 <style scoped>
@@ -105,7 +109,7 @@ function sellOne(item) {
   cursor: pointer;
 }
 .sell-button:focus {
-  outline: 2px solid rgba(59,130,246,0.6);
+  outline: 2px solid rgba(59, 130, 246, 0.6);
   outline-offset: 2px;
 }
 
@@ -113,7 +117,7 @@ function sellOne(item) {
   font-weight: 600;
 }
 
-.inventory-name[role="button"] {
+.inventory-name[role='button'] {
   cursor: pointer;
   text-decoration: underline;
 }
