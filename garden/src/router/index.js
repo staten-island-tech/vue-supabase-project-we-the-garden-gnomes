@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
 import GardenView from '../views/garden.vue'
-
 import SignInorUp from '../auth/SignInorUp.vue'
 
 const router = createRouter({
@@ -11,6 +11,7 @@ const router = createRouter({
       path: '/home',
       name: 'home',
       component: GardenView,
+      meta: { requiresAuth: true },
     },
     {
       path: '/',
@@ -18,6 +19,22 @@ const router = createRouter({
       component: SignInorUp,
     },
   ],
+})
+
+router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+
+  if (!authStore.user && !authStore.loading) {
+    await authStore.fetchUser()
+  }
+
+  if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+    return { name: 'login' }
+  }
+
+  if (to.name === 'login' && authStore.isLoggedIn) {
+    return { name: 'home' }
+  }
 })
 
 export default router
