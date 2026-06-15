@@ -4,7 +4,7 @@
     <img src="/GardenFrame.png" alt="garden frame" class="bg-frame" aria-hidden="true" />
     <img src="/ShopButton.png" alt="shop button" class="bg-shop" role="button" tabindex="0" @click="openShop" />
 
-    <!-- Inventory button (replaces inline Inventory component) -->
+
     <img
       src="/InventoryButton.png"
       alt="inventory button"
@@ -14,9 +14,11 @@
       @click="openInventory"
     />
 
+
     <div class="container">
       <Water />
     </div>
+
 
     <div v-if="showShop" class="shop-overlay" @click.self="closeShop">
       <div class="shop-panel" role="dialog" aria-modal="true" aria-label="Flower shop">
@@ -25,7 +27,7 @@
       </div>
     </div>
 
-    <!-- Inventory modal -->
+
     <div v-if="showInventory" class="inventory-overlay" @click.self="closeInventory">
       <div class="inventory-panel" role="dialog" aria-modal="true" aria-label="Inventory">
         <button class="inventory-close" @click="closeInventory" aria-label="Close inventory">×</button>
@@ -33,9 +35,11 @@
       </div>
     </div>
 
+
     <div class="dirt-bar" aria-hidden="true"></div>
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue'
@@ -43,25 +47,31 @@ import Inventory from '../components/inventory.vue'
 import Water from '../components/water.vue'
 import Flowers from '../components/flowers.vue'
 
+
 const showShop = ref(false)
 const showInventory = ref(false)
+
 
 function openShop() {
   showShop.value = true
 }
 
+
 function closeShop() {
   showShop.value = false
 }
+
 
 function openInventory() {
   showInventory.value = true
 }
 
+
 function closeInventory() {
   showInventory.value = false
 }
 </script>
+
 
 <style scoped>
 .page {
@@ -76,6 +86,7 @@ function closeInventory() {
   padding-bottom: 8rem;
 }
 
+
 .background-photos {
   position: absolute;
   top: 50%;
@@ -89,6 +100,8 @@ function closeInventory() {
 }
 
 
+
+
 .background-photos .bg {
   position: absolute;
   left: 50%;
@@ -98,6 +111,7 @@ function closeInventory() {
   height: auto;
   max-width: 100%;
 }
+
 
 .bg-dirt {
   position: fixed;
@@ -114,6 +128,8 @@ function closeInventory() {
 }
 
 
+
+
 .bg-frame {
   position: fixed;
   inset: 0;
@@ -128,6 +144,7 @@ function closeInventory() {
   pointer-events: none;
 }
 
+
 .bg-shop {
   position: fixed;
   top: 4%;
@@ -141,19 +158,19 @@ function closeInventory() {
   cursor: pointer;
 }
 
-/* Inventory button position */
+
 .bg-inventory {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 220px;
+  top: 0rem;
+  right: 12rem;
+  width: 480px;
   max-width: 30vw;
   z-index: 30;
   pointer-events: auto;
   cursor: pointer;
 }
 
-/* Inventory modal */
+
 .inventory-overlay {
   position: fixed;
   inset: 0;
@@ -164,6 +181,7 @@ function closeInventory() {
   background: rgba(0, 0, 0, 0.25);
   z-index: 40;
 }
+
 
 .inventory-panel {
   position: relative;
@@ -176,6 +194,7 @@ function closeInventory() {
   padding: 1rem;
 }
 
+
 .inventory-close {
   position: absolute;
   right: 0.75rem;
@@ -185,6 +204,7 @@ function closeInventory() {
   font-size: 1.5rem;
   cursor: pointer;
 }
+
 
 .container {
   width: 100%;
@@ -198,6 +218,7 @@ function closeInventory() {
     z-index: 20;
 }
 
+
 /* keep original inventory-floating styles in case needed elsewhere */
 .inventory-floating {
   top: 1rem;
@@ -207,6 +228,7 @@ function closeInventory() {
   z-index: 30;
   position: relative;
 }
+
 
 .shop-overlay {
   position: fixed;
@@ -218,6 +240,7 @@ function closeInventory() {
   background: rgba(0, 0, 0, 0.25);
   z-index: 40;
 }
+
 
 .shop-panel {
   position: relative;
@@ -231,6 +254,7 @@ function closeInventory() {
   background-image: url("ShopButton.png");
 }
 
+
 .shop-close {
   position: absolute;
   right: 0.75rem;
@@ -241,10 +265,12 @@ function closeInventory() {
   cursor: pointer;
 }
 
+
 .container > * {
   flex: 1 1 calc(33.333% - 1.33rem);
   min-width: 280px;
 }
+
 
 .dirt-bar {
   position: fixed;
@@ -257,3 +283,7 @@ function closeInventory() {
   z-index: -1;
 }
 </style>
+
+
+
+
