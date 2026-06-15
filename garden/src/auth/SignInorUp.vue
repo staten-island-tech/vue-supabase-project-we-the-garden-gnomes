@@ -1,6 +1,6 @@
 <template>
   <div class="auth-container">
-    <h2>Create an Account</h2>
+    <h2 class="color-black">Sign In/Up</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="example@example.com" required />
       <button type="submit" :class="{ loading: loading }" :disabled="loading">
