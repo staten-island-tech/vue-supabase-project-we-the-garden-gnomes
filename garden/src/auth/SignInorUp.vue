@@ -1,11 +1,9 @@
 <template>
   <div class="auth-container">
-    <h2>Sign in</h2>
+    <h2 class="color-clack">Sign in</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="example@example.com" required />
-      <button type="submit" :class="{ loading: loading }" :disabled="loading">
-        {{ loading ? 'Sending Magic Link...' : 'Send Magic Link' }}
-      </button>
+      <button type="submit">Sign In/Up</button>
     </form>
     <p style="margin-top: 12px">
       Don't have an account? <router-link to="/signup">Create one</router-link>
@@ -15,7 +13,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { supabase } from '../supabase'
+import { createClient } from '@supabase/supabase-js'
 const email = ref('')
 const loading = ref(false)
 const handleRegister = async () => {
