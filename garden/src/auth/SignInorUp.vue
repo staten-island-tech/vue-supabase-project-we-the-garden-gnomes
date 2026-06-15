@@ -11,6 +11,7 @@
 
 <script setup>
 import { ref } from 'vue'
+<<<<<<< HEAD
 import { useRouter } from 'vue-router'
 import { createClient } from '@supabase/supabase-js'
 const email = ref('')
@@ -24,14 +25,19 @@ const goToHome = () => {
   router.push('/home')
 }
 
+=======
+
+const email = ref('')
+const loading = ref(false)
+const supabaseClient = useSupabaseClient()
+>>>>>>> parent of 11e8074 (I FINALLY FIXED THE LOGIN yay)
 const handleRegister = async () => {
   try {
     loading.value = true
-    console.log(loading.value)
     const { data, error } = await supabaseClient.auth.signInWithOtp({
       email: email.value,
       options: {
-        emailRedirectTo: `${window.location.origin}/home`,
+        emailRedirectTo: '${window.location.origin}/home',
       },
     })
 
@@ -42,6 +48,7 @@ const handleRegister = async () => {
   }
 }
 </script>
+<<<<<<< HEAD
 <style scoped>
 .home-button {
   position: absolute;
@@ -61,3 +68,5 @@ const handleRegister = async () => {
   background-color: #45a049;
 }
 </style>
+=======
+>>>>>>> parent of 11e8074 (I FINALLY FIXED THE LOGIN yay)
