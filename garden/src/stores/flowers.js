@@ -2,19 +2,28 @@ import { ref } from 'vue'
 import { defineStore } from 'pinia'
 
 export const useFlowerStore = defineStore('flower', () => {
-  const flowers = ref([
-    { name: 'Roses', buyPrice: 10, sellPrice: 15, imageUrl: '/Rose.png' },
-    { name: 'Tulips', buyPrice: 8, sellPrice: 12, imageUrl: '/Tulip.png' },
-    { name: 'Sunflowers', buyPrice: 10, sellPrice: 15, imageUrl: '/Sunflower.png' },
-    { name: 'Orchids', buyPrice: 8, sellPrice: 12, imageUrl: '/Orchid.png' },
-    { name: 'Lilies', buyPrice: 12, sellPrice: 18, imageUrl: '/Lily.png' },
-    { name: 'Carnations', buyPrice: 6, sellPrice: 9, imageUrl: '/Carnation.png' },
-    { name: 'Hydrangeas', buyPrice: 16, sellPrice: 24, imageUrl: '/Hydrangea.png' },
-    { name: 'Peonies', buyPrice: 8, sellPrice: 12, imageUrl: '/Peony.png' },
-    { name: 'Daisies', buyPrice: 6, sellPrice: 9, imageUrl: '/Daisy.png' },
-    { name: 'Chrysanthemums', buyPrice: 20, sellPrice: 30, imageUrl: '/Chrysanthemum.png' },
-    { name: 'Goldfish Plants', buyPrice: 50, sellPrice: 75, imageUrl: '/GoldfishFlower.png' },
-  ])
+const flowers = ref([
+  { name: 'Roses', buyPrice: 10, sellPrice: 15, imageUrl: '/Rose.png' },
+  { name: 'Tulips', buyPrice: 8, sellPrice: 12, imageUrl: '/Tulip.png' },
+  { name: 'Sunflowers', buyPrice: 10, sellPrice: 15, imageUrl: '/Sunflower.png' },
+  { name: 'Orchids', buyPrice: 8, sellPrice: 12, imageUrl: '/Orchid.png' },
+  { name: 'Lilies', buyPrice: 12, sellPrice: 18, imageUrl: '/Lily.png' },
+  { name: 'Carnations', buyPrice: 6, sellPrice: 9, imageUrl: '/Carnation.png' },
+  { name: 'Hydrangeas', buyPrice: 16, sellPrice: 24, imageUrl: '/Hydrangea.png' },
+  { name: 'Peonies', buyPrice: 8, sellPrice: 12, imageUrl: '/Peony.png' },
+  { name: 'Daisies', buyPrice: 6, sellPrice: 9, imageUrl: '/Daisy.png' },
+  { name: 'Chrysanthemums', buyPrice: 20, sellPrice: 30, imageUrl: '/Chrysanthemum.png' },
+  { name: 'Goldfish Plants', buyPrice: 50, sellPrice: 75, imageUrl: '/GoldfishFlower.png' },
+]);
+
+async function insertUsers() {
+  const { data, error } = await supabase
+    .from('users_table')
+    .insert(usersArray.value); // Pass the raw array directly
+
+  if (error) console.error('Error inserting rows:', error.message);
+  else console.log('Rows inserted successfully!', data);
+}
 
   const inventory = ref([])
 
@@ -35,5 +44,6 @@ export const useFlowerStore = defineStore('flower', () => {
     flowers,
     inventory,
     addToInventory,
+    insertUsers,
   }
 })
