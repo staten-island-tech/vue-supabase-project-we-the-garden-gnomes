@@ -3,7 +3,7 @@
     <h2 class="color-black">Create an Account</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="example@example.com" required />
-      <button type="submit">Sign In</button>
+      <button type="submit" :class="{ loading: loading }" :disabled="loading">{{ loading ? 'Sending Magic Link...' : 'Sign In' }}</button>
     </form>
   </div>
 </template>
@@ -16,13 +16,15 @@ const supabaseClient = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 )
+const loading = ref(false)
 const handleRegister = async () => {
   try {
-    loading.value = true
+    loading.value = true;
     console.log(loading.value)
     const { data, error } = await supabaseClient.auth.signInWithOtp({
       email: email.value,
       options: {
+        shouldCreateUser: true,
         emailRedirectTo: `${window.location.origin}/home`,
       },
     })
@@ -31,6 +33,8 @@ const handleRegister = async () => {
     alert('Registration successful! Please check your email for a confirmation link.')
   } catch (error) {
     alert(error.message)
+  } finally {
+    loading.value = false;
   }
 }
 </script>
