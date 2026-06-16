@@ -15,10 +15,7 @@ import { ref } from 'vue'
 import { supabase } from '../../supabase'
 const email = ref('')
 const loading = ref(false);
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY,
-)
+
 const handleRegister = async () => {
   try {
     loading.value = true;
