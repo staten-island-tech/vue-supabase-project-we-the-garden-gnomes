@@ -12,6 +12,7 @@
 import { ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 const email = ref('')
+const loading = ref(false)
 const supabaseClient = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
@@ -19,7 +20,6 @@ const supabaseClient = createClient(
 const handleRegister = async () => {
   try {
     loading.value = true
-    console.log(loading.value)
     const { data, error } = await supabaseClient.auth.signInWithOtp({
       email: email.value,
       options: {
@@ -31,6 +31,8 @@ const handleRegister = async () => {
     alert('Registration successful! Please check your email for a confirmation link.')
   } catch (error) {
     alert(error.message)
+  } finally {
+    loading.value = false
   }
 }
 </script>
