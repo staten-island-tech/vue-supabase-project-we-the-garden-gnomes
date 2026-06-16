@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import GardenView from '../views/garden.vue'
-import SignInorUp from '../auth/SignInorUp.vue'
+import SignIn from '@/auth/SignIn.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,7 +14,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'login',
-      component: SignInorUp,
+      component: SignIn,
     },
   ],
 })

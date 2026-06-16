@@ -1,14 +1,11 @@
 <template>
   <div class="auth-container">
     <h2 class="color-black">Sign In/Up</h2>
-    <form @submit.prevent="handleRegister">
+    <form @submit.prevent="handleRegister()">
       <input v-model="email" type="email" placeholder="example@example.com" required />
-      <button
-              type="submit"
-              :class="{ loading: loading }"
-              :disabled="loading">
-              {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
-            </button>
+      <button type="submit" :class="{ loading: loading }" :disabled="loading">
+        {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
+      </button>
     </form>
   </div>
 </template>
@@ -18,7 +15,7 @@ import { ref } from 'vue'
 import { supabase } from '@/supabase'
 const email = ref('')
 const loading = ref(false)
-const handleRegister = async () => {
+async function handleRegister() {
   try {
     loading.value = true
     const { data, error } = await supabase.auth.signInWithOtp({
