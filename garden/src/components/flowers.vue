@@ -12,7 +12,7 @@
           <h2>{{ flower.name }}</h2>
           <div class="prices">
             <span>Buy: ${{ flower.buyPrice }}</span>
-            <span>Sell: ${{ flower.sellPrice }}</span>
+            <span>Sell: ${{ flower.sellprice }}</span>
           </div>
           <button
             class="add-button"

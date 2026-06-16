@@ -3,17 +3,17 @@ import { defineStore } from 'pinia'
 
 export const useFlowerStore = defineStore('flower', () => {
   const flowers = ref([
-    { name: 'Roses', buyPrice: 10, sellPrice: 15, imageUrl: '/Rose.png' },
-    { name: 'Tulips', buyPrice: 8, sellPrice: 12, imageUrl: '/Tulip.png' },
-    { name: 'Sunflowers', buyPrice: 10, sellPrice: 15, imageUrl: '/Sunflower.png' },
-    { name: 'Orchids', buyPrice: 8, sellPrice: 12, imageUrl: '/Orchid.png' },
-    { name: 'Lilies', buyPrice: 12, sellPrice: 18, imageUrl: '/Lily.png' },
-    { name: 'Carnations', buyPrice: 6, sellPrice: 9, imageUrl: '/Carnation.png' },
-    { name: 'Hydrangeas', buyPrice: 16, sellPrice: 24, imageUrl: '/Hydrangea.png' },
-    { name: 'Peonies', buyPrice: 8, sellPrice: 12, imageUrl: '/Peony.png' },
-    { name: 'Daisies', buyPrice: 6, sellPrice: 9, imageUrl: '/Daisy.png' },
-    { name: 'Chrysanthemums', buyPrice: 20, sellPrice: 30, imageUrl: '/Chrysanthemum.png' },
-    { name: 'Goldfish Plants', buyPrice: 50, sellPrice: 75, imageUrl: '/GoldfishFlower.png' },
+    { name: 'Roses', buyPrice: 10, sellprice: 15, imageUrl: '/Rose.png' },
+    { name: 'Tulips', buyPrice: 8, sellprice: 12, imageUrl: '/Tulip.png' },
+    { name: 'Sunflowers', buyPrice: 10, sellprice: 15, imageUrl: '/Sunflower.png' },
+    { name: 'Orchids', buyPrice: 8, sellprice: 12, imageUrl: '/Orchid.png' },
+    { name: 'Lilies', buyPrice: 12, sellprice: 18, imageUrl: '/Lily.png' },
+    { name: 'Carnations', buyPrice: 6, sellprice: 9, imageUrl: '/Carnation.png' },
+    { name: 'Hydrangeas', buyPrice: 16, sellprice: 24, imageUrl: '/Hydrangea.png' },
+    { name: 'Peonies', buyPrice: 8, sellprice: 12, imageUrl: '/Peony.png' },
+    { name: 'Daisies', buyPrice: 6, sellprice: 9, imageUrl: '/Daisy.png' },
+    { name: 'Chrysanthemums', buyPrice: 20, sellprice: 30, imageUrl: '/Chrysanthemum.png' },
+    { name: 'Goldfish Plants', buyPrice: 50, sellprice: 75, imageUrl: '/GoldfishFlower.png' },
   ])
 
   async function insertUsers() {
@@ -63,7 +63,7 @@ export const useFlowerStore = defineStore('flower', () => {
       // try to match by name first, otherwise try by imageUrl
       const match = flowers.value.find((fl) => fl.imageUrl === f.imageUrl || fl.name === f.name)
       if (match) {
-        earned += match.sellPrice || 0
+        earned += match.sellprice || 0
       } else {
         earned += 1
       }
@@ -82,7 +82,7 @@ export const useFlowerStore = defineStore('flower', () => {
     const sellCount = Math.min(amount, item.quantity)
     // find price from flowers list
     const fl = flowers.value.find((f) => f.name === name)
-    const price = fl && fl.sellPrice ? fl.sellPrice : 0
+    const price = fl && fl.sellprice ? fl.sellprice : 0
     item.quantity -= sellCount
     if (item.quantity <= 0) {
       // remove item entirely
