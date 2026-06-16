@@ -1,20 +1,28 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
+import { createClient } from '@supabase/supabase-js'
+
+const supabaseClient = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY,
+)
 
 export const useFlowerStore = defineStore('flower', () => {
-  const flowers = ref([
-    { name: 'Roses', buyPrice: 10, sellprice: 15, imageUrl: '/Rose.png' },
-    { name: 'Tulips', buyPrice: 8, sellprice: 12, imageUrl: '/Tulip.png' },
-    { name: 'Sunflowers', buyPrice: 10, sellprice: 15, imageUrl: '/Sunflower.png' },
-    { name: 'Orchids', buyPrice: 8, sellprice: 12, imageUrl: '/Orchid.png' },
-    { name: 'Lilies', buyPrice: 12, sellprice: 18, imageUrl: '/Lily.png' },
-    { name: 'Carnations', buyPrice: 6, sellprice: 9, imageUrl: '/Carnation.png' },
-    { name: 'Hydrangeas', buyPrice: 16, sellprice: 24, imageUrl: '/Hydrangea.png' },
-    { name: 'Peonies', buyPrice: 8, sellprice: 12, imageUrl: '/Peony.png' },
-    { name: 'Daisies', buyPrice: 6, sellprice: 9, imageUrl: '/Daisy.png' },
-    { name: 'Chrysanthemums', buyPrice: 20, sellprice: 30, imageUrl: '/Chrysanthemum.png' },
-    { name: 'Goldfish Plants', buyPrice: 50, sellprice: 75, imageUrl: '/GoldfishFlower.png' },
-  ])
+  const flowers = ref([])
+  const loading = ref(false)
+
+  async function fetchFlowers() {
+    loading.value = true
+    try {
+      const { data, error } = await supabaseClient.from('flowers').select('*')
+      if (error) throw error
+      flowers.value = data || []
+    } catch (error) {
+      console.error('Error fetching flowers:', error.message)
+    } finally {
+      loading.value = false
+    }
+  }
 
   async function insertUsers() {
     const { data, error } = await supabase.from('users_table').insert(usersArray.value) // Pass the raw array directly
@@ -94,6 +102,8 @@ export const useFlowerStore = defineStore('flower', () => {
 
   return {
     flowers,
+    loading,
+    fetchFlowers,
     inventory,
     pendingWaterSelection,
     addToInventory,

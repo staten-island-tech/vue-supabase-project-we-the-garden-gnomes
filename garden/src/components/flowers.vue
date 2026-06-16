@@ -11,13 +11,13 @@
         <div class="flower-info">
           <h2>{{ flower.name }}</h2>
           <div class="prices">
-            <span>Buy: ${{ flower.buyPrice }}</span>
+            <span>Buy: ${{ flower.buyprices }}</span>
             <span>Sell: ${{ flower.sellprice }}</span>
           </div>
           <button
             class="add-button"
             type="button"
-            :disabled="counter.totalMoney < flower.buyPrice"
+            :disabled="counter.totalMoney < flower.buyprices"
             @click="handleAdd(flower, $event)"
           >
             Add to Inventory
@@ -37,7 +37,7 @@ const counter = useCounterStore()
 
 function handleAdd(flower, ev) {
   // add to inventory as before
-  const price = flower.buyPrice || 0
+  const price = flower.buyprices || 0
   if (counter.totalMoney < price) {
     window.alert('Not enough money to purchase this flower.')
     return
