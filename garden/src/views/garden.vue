@@ -215,7 +215,7 @@ onUnmounted(() => {
 
 .bg-shop {
   position: fixed;
-  top: 4%;
+  top: 5.5%;
   left: 3%;
   transform: none;
   transform-origin: top left;
@@ -228,9 +228,9 @@ onUnmounted(() => {
 
 .bg-inventory {
   position: fixed;
-  top: 0rem;
-  right: 12rem;
-  width: 480px;
+  top: 1%;
+  right: 10%;
+  width: 26%;
   max-width: 30vw;
   z-index: 30;
   pointer-events: auto;

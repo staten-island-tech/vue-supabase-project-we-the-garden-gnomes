@@ -16,6 +16,13 @@ export const useFlowerStore = defineStore('flower', () => {
     { name: 'Goldfish Plants', buyPrice: 50, sellPrice: 75, imageUrl: '/GoldfishFlower.png' },
   ])
 
+  async function insertUsers() {
+    const { data, error } = await supabase.from('users_table').insert(usersArray.value) // Pass the raw array directly
+
+    if (error) console.error('Error inserting rows:', error.message)
+    else console.log('Rows inserted successfully!', data)
+  }
+
   const inventory = ref([])
   const floating = ref([])
   // when true, the UI is waiting for the user to click a floating flower
@@ -98,5 +105,6 @@ export const useFlowerStore = defineStore('flower', () => {
     stopSelection,
     sellFromInventory,
     removeFloating,
+    insertUsers,
   }
 })

@@ -1,7 +1,6 @@
 <template>
   <section class="inventory-card">
     <h1>Inventory</h1>
-
     <div class="inventory-grid">
       <div class="inventory-item">
         <span>Water Droplets</span>
@@ -11,7 +10,6 @@
       <div v-if="flowerStore.inventory.length === 0" class="empty-state">
         No flowers in inventory yet.
       </div>
-
       <div v-else>
         <div v-for="item in flowerStore.inventory" :key="item.name" class="inventory-item">
           <img v-if="item.imageUrl" :src="item.imageUrl" :alt="item.name" class="inventory-thumb" />
@@ -68,6 +66,11 @@ function sellOne(item) {
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.95);
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+.inventory-card h1 {
+  margin-bottom: 1rem;
+  font-size: 1.9rem;
 }
 
 .inventory-card h1 {
