@@ -3,17 +3,9 @@
     <h2 class="color-black">Sign In/Up</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="example@example.com" required />
-<<<<<<< HEAD
-      <button
-              type="submit"
-              :class="{ loading: loading }"
-              z              {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
-            </button>
-=======
       <button type="submit" :class="{ loading: loading }" :disabled="loading">
         {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
       </button>
->>>>>>> 4bb5aef992392ff4673254aabd3865c6106cc2ac
     </form>
   </div>
 </template>
