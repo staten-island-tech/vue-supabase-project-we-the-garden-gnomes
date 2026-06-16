@@ -13,15 +13,12 @@ import { ref } from 'vue'
 import { supabase } from '../../supabase'
 const email = ref('')
 const loading = ref(false)
-
 const handleRegister = async () => {
   try {
     loading.value = true
-    console.log(loading.value)
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
-        shouldCreateUser: true,
         emailRedirectTo: `${window.location.origin}/home`,
       },
     })
@@ -35,3 +32,4 @@ const handleRegister = async () => {
   }
 }
 </script>
+<style scoped></style>

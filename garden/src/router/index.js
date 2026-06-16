@@ -2,8 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
 
 import GardenView from '../views/garden.vue'
-
-import SignInorUp from '@/auth/SignInorUp.vue'
+import SignInorUp from '../auth/SignInorUp.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
