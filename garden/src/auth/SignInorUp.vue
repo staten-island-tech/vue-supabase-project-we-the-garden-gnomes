@@ -3,9 +3,7 @@
     <h2 class="color-black">Sign In/Up</h2>
     <form @submit.prevent="handleRegister">
       <input v-model="email" type="email" placeholder="example@example.com" required />
-      <button type="submit" :class="{ loading: loading }" :disabled="loading">
-        {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
-      </button>
+      <button type="submit">Sign In</button>
     </form>
   </div>
 </template>
@@ -14,14 +12,14 @@
 import { ref } from 'vue'
 import { createClient } from '@supabase/supabase-js'
 const email = ref('')
-const loading = ref(false);
+const loading = ref(false)
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY,
 )
 const handleRegister = async () => {
   try {
-    loading.value = true;
+    loading.value = true
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
@@ -35,7 +33,7 @@ const handleRegister = async () => {
   } catch (error) {
     alert(error.message)
   } finally {
-    loading.value = false;
+    loading.value = false
   }
 }
 </script>
