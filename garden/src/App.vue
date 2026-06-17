@@ -5,13 +5,13 @@ import { RouterLink, RouterView } from 'vue-router'
 <template>
   <div class="app-shell">
     <header class="app-header">
-      <div>
+      <!-- <div>
         <h1>Garden</h1>
         <p>Grow your garden!!!!!</p>
-      </div>
-      <nav>
+      </div> -->
+      <!-- <nav>
         <RouterLink to="/home">Home</RouterLink>
-      </nav>
+      </nav> -->
     </header>
     <div>
       <main>
