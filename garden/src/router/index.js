@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import GardenView from '../views/garden.vue'
+import GardenView from '@/views/GardenView.vue'
 import SignIn from '@/auth/SignIn.vue'
 
 const router = createRouter({
