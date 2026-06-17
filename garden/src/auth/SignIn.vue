@@ -21,6 +21,7 @@ async function handleRegister() {
     const { data, error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
+        shouldCreateUser: true,
         emailRedirectTo: `${window.location.origin}/home`,
       },
     })
