@@ -1,7 +1,7 @@
 <template>
   <div class="auth-container">
-    <h2>Create an Account</h2>
-    <form @submit.prevent="handleRegister">
+    <h2 class="color-black">Sign In/Up</h2>
+    <form @submit.prevent="handleRegister()">
       <input v-model="email" type="email" placeholder="example@example.com" required />
       <button type="submit" :class="{ loading: loading }" :disabled="loading">
         {{ loading ? 'Sending Magic Link...' : 'Sign In' }}
@@ -12,20 +12,16 @@
 
 <script setup>
 import { ref } from 'vue'
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from '@/supabase'
 const email = ref('')
 const loading = ref(false)
-const supabaseClient = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY,
-)
-const handleRegister = async () => {
+async function handleRegister() {
   try {
     loading.value = true
-    console.log(loading.value)
-    const { data, error } = await supabaseClient.auth.signInWithOtp({
+    const { data, error } = await supabase.auth.signInWithOtp({
       email: email.value,
       options: {
+        shouldCreateUser: true,
         emailRedirectTo: `${window.location.origin}/home`,
       },
     })

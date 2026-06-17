@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-const UserStore = defineStore('userStore', () => {
-  const uuid = ref('')
+export const useUserStore = defineStore(
+  'users',
+  () => {
+    const uuid = ref('')
 
-  return { uuid }
-})
-
-//fix this up, change the variables to what is needed.
+    return { uuid }
+  },
+  { persist: true },
+)

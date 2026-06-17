@@ -11,10 +11,15 @@
         <div class="flower-info">
           <h2>{{ flower.name }}</h2>
           <div class="prices">
-            <span>Buy: ${{ flower.buyPrice }}</span>
-            <span>Sell: ${{ flower.sellPrice }}</span>
+            <span>Buy: ${{ flower.buyprices }}</span>
+            <span>Sell: ${{ flower.sellprice }}</span>
           </div>
-          <button class="add-button" type="button" @click="store.addToInventory(flower)">
+          <button
+            class="add-button"
+            type="button"
+            :disabled="counter.totalMoney < flower.buyprices"
+            @click="handleAdd(flower, $event)"
+          >
             Add to Inventory
           </button>
         </div>
@@ -25,8 +30,26 @@
 
 <script setup>
 import { useFlowerStore } from '../stores/flowers'
+import { useCounterStore } from '../stores/counter'
 
 const store = useFlowerStore()
+const counter = useCounterStore()
+
+function handleAdd(flower, ev) {
+  // add to inventory as before
+  const price = flower.buyprices || 0
+  if (counter.totalMoney < price) {
+    window.alert('Not enough money to purchase this flower.')
+    return
+  }
+  // charge user and add to inventory
+  counter.spendMoney(price)
+  store.addToInventory(flower)
+  // add a floating visual for feedback, but mark it as not yet eligible to earn on watering
+  const x = ev?.clientX ?? Math.max(window.innerWidth - 120, 0)
+  const y = ev?.clientY ?? 120
+  store.addFloating({ imageUrl: flower.imageUrl || '', x, y, name: flower.name, canEarn: false })
+}
 </script>
 
 <style scoped>
