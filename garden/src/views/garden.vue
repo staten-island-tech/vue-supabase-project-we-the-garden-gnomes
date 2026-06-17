@@ -215,7 +215,7 @@ onUnmounted(() => {
 
 .bg-shop {
   position: fixed;
-  top: 4%;
+  top: 5%;
   left: 3%;
   transform: none;
   transform-origin: top left;
